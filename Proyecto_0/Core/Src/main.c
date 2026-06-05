@@ -35,6 +35,15 @@
 #define TESPERA 2000 // periodo de espera en ms entre las transiciones
 #define TREBOTES 20 // intervalo de rebotes en ms
 #define TSONDEO 200 // retardo de sondeo en ms
+#define LUZROJA_Pin GPIO_PIN_8
+#define LUZROJA_GPIO_Port GPIOD
+#define LUZVERDE_Pin GPIO_PIN_9
+#define LUZVERDE_GPIO_Port GPIOD
+#define LUZAMARILLA_Pin GPIO_PIN_11
+#define LUZAMARILLA_GPIO_Port GPIOD
+#define LUCES_GPIO_Port GPIOD
+#define BOTONCAMBIO_Pin GPIO_PIN_5
+#define BOTONCAMBIO_GPIO_Port GPIOA
 
 /* USER CODE END PD */
 
@@ -120,7 +129,6 @@ int main(void)
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
-}
 
 /**
   * @brief System Clock Configuration
