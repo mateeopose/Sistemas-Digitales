@@ -3,6 +3,9 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
+		<item value="while"/>
+		<item value="pot_inf"/>
+		<item value="pot"/>
 		<item value="ntc_gpio"/>
 		<item value="bsr"/>
 		<item value="brs"/>

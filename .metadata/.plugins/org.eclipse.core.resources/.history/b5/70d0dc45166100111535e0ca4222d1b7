@@ -230,14 +230,15 @@ int main(void)
       // Opcional: Si el potenciómetro está al mínimo (tiempo casi 0), los dejamos fijos
       if (tiempo_parpadeo < 50) {
           estado_leds = 1;
-      	  }
+      }
 
       // Aplicamos los cambios a la placa
       actualizarLEDs(cantidad_leds, estado_leds);
-  	  }
+  }
 
-  }  /* USER CODE END 3 */
-}
+}  /* USER CODE END 3 */
+
+
 /**
   * @brief System Clock Configuration
   * @retval None

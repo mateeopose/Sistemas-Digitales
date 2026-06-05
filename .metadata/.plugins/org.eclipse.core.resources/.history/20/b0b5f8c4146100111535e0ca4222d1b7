@@ -84,16 +84,6 @@
 #define CANTIDAD_BUFFER_MINIMO 2
 // Tamaño del buffer a implementar
 #define BUFFER_TOTAL (CANTIDAD_BUFFER_MINIMO * BUFFER_MINIMO)
-/* USER CODE BEGIN PD */
-// Parámetros para el Potenciómetro (Tiempo en ms)
-#define POT_MAX_LSB 4095
-#define TIEMPO_MAX_MS 5000 // 5 segundos
-
-// Parámetros para la NTC (Ajustar empíricamente mirando el Live Watch)
-// Al calentarse (ej. tocarla con el dedo), el valor LSB de la NTC baja.
-#define NTC_FRIO 3700     // Valor a temperatura ambiente
-#define NTC_CALIENTE 3400 // Valor cuando está caliente
-/* USER CODE END PD */
 
 /* USER CODE END PD */
 
@@ -134,29 +124,8 @@ void mostrar(void); // Maneja los LED indicadores de rangos
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-// Armamos un arreglo con tus 6 LEDs para recorrerlos fácilmente
-uint16_t pines_leds[6] = {
-    ntcAlto_Pin, ntcBajo_Pin, ntcMedio_Pin,
-    potBajo_Pin, potAlto_Pin, potMedio_Pin
-};
 
-void actualizarLEDs(uint8_t cantidad, uint8_t estado) {
-    apagarTodos(); // Siempre arrancamos con el registro limpio
-
-    if (estado == 1 && cantidad > 0) {
-        uint32_t mascara = 0;
-        // Juntamos en una máscara solo los LEDs que nos piden prender
-        for(int i = 0; i < cantidad; i++) {
-            if(i < 6) {
-                mascara |= pines_leds[i];
-            }
-        }
-        // Encendemos los seleccionados (usando tu macro del puerto)
-        leds_OUT_Port->BSRR = mascara;
-    }
-}
 /* USER CODE END 0 */
-
 
 /**
   * @brief  The application entry point.
@@ -199,45 +168,12 @@ int main(void)
   {
     /* USER CODE END WHILE */
 	  // Gestionamos los LED acorde a los valores promedio obtenidos
-	//  mostrar();
+	  mostrar();
     /* USER CODE BEGIN 3 */
-  // --- 1. ESCALAMIENTO DEL POTENCIÓMETRO (Velocidad) ---
-  // Regla de 3 simple: mapeamos 0-4095 LSB a 0-5000 ms
-  uint32_t tiempo_parpadeo = (pot_avg * TIEMPO_MAX_MS) / POT_MAX_LSB;
-
-  // --- 2. SATURACIÓN Y ESCALAMIENTO DE LA NTC (Cantidad) ---
-  uint16_t ntc_saturada = ntc_avg;
-
-  // Saturación: Si hace más frío o más calor que nuestros límites, lo estancamos en el tope
-  if (ntc_saturada > NTC_FRIO) ntc_saturada = NTC_FRIO;
-  if (ntc_saturada < NTC_CALIENTE) ntc_saturada = NTC_CALIENTE;
-
-  // Escalamiento: Mapeamos el rango reducido (ej. 300 LSB) a 0-6 LEDs.
-  // Como el LSB baja cuando calienta, restamos al revés para que "más calor = más LEDs"
-  uint8_t cantidad_leds = 6 - (((ntc_saturada - NTC_CALIENTE) * 6) / (NTC_FRIO - NTC_CALIENTE));
-
-  // --- 3. LÓGICA DE PARPADEO (No-bloqueante con HAL_GetTick) ---
-  static uint32_t ultimo_cambio = 0;
-  static uint8_t estado_leds = 0;
-
-  // Comprobamos si ya pasó el tiempo calculado sin detener el programa
-  if ((HAL_GetTick() - ultimo_cambio) >= tiempo_parpadeo) {
-      ultimo_cambio = HAL_GetTick();
-
-      // Alternamos el estado (si era 0 pasa a 1, si era 1 pasa a 0)
-      estado_leds = !estado_leds;
-
-      // Opcional: Si el potenciómetro está al mínimo (tiempo casi 0), los dejamos fijos
-      if (tiempo_parpadeo < 50) {
-          estado_leds = 1;
-      	  }
-
-      // Aplicamos los cambios a la placa
-      actualizarLEDs(cantidad_leds, estado_leds);
-  	  }
-
-  }  /* USER CODE END 3 */
+  }
+  /* USER CODE END 3 */
 }
+
 /**
   * @brief System Clock Configuration
   * @retval None
