@@ -34,34 +34,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := Proyecto_0
+BUILD_ARTIFACT_NAME := Proyecto_0base
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-Proyecto_0.elf \
+Proyecto_0base.elf \
 
 MAP_FILES += \
-Proyecto_0.map \
+Proyecto_0base.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-Proyecto_0.list \
+Proyecto_0base.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: Proyecto_0.elf secondary-outputs
+main-build: Proyecto_0base.elf secondary-outputs
 
 # Tool invocations
-Proyecto_0.elf Proyecto_0.map: $(OBJS) $(USER_OBJS) C:\Users\mateo\OneDrive\Documentos\FACULTAD\FACULTAD\Sistemas\ Digitales\Proyectos\Proyecto_0\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Proyecto_0.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\mateo\OneDrive\Documentos\FACULTAD\FACULTAD\Sistemas Digitales\Proyectos\Proyecto_0\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Proyecto_0.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Proyecto_0base.elf Proyecto_0base.map: $(OBJS) $(USER_OBJS) C:\Users\mateo\OneDrive\Documentos\FACULTAD\FACULTAD\Sistemas\ Digitales\Proyectos\Proyecto_0\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Proyecto_0base.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\mateo\OneDrive\Documentos\FACULTAD\FACULTAD\Sistemas Digitales\Proyectos\Proyecto_0\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Proyecto_0base.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -70,14 +70,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Proyecto_0.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "Proyecto_0.list"
+Proyecto_0base.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "Proyecto_0base.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) Proyecto_0.elf Proyecto_0.list Proyecto_0.map default.size.stdout
+	-$(RM) Proyecto_0base.elf Proyecto_0base.list Proyecto_0base.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

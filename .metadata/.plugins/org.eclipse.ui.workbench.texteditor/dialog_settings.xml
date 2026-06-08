@@ -3,6 +3,8 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
+		<item value="buffer"/>
+		<item value="ntc"/>
 		<item value="while"/>
 		<item value="pot_inf"/>
 		<item value="pot"/>
